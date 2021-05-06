@@ -30,16 +30,16 @@ void main(int argc, char *argv[]){
     
     if(!(pid_a=fork())){//process A
         
-
+        char *arguments[] = {"./hist_calc", "acnamedpipe", NULL};
+        execv(arguments[0], arguments);
 
     }else{
 
     }
         if(!(pid_b=fork())){//process B
 
-            
-
-
+            char *arguments[] = {"./filter", "bcnamedpipe", NULL};
+            execv(arguments[0], arguments);
 
         }else{
 
@@ -84,7 +84,7 @@ void main(int argc, char *argv[]){
                 close(parent_child_histogram_before_fd[1]);
                 close(named_pipe_fd_bc);
                 close(named_pipe_fd_ac);
-                
+
             }else{//main process
                 
                 close(parent_child_histogram_after_fd[1]);
