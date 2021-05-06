@@ -26,15 +26,15 @@ void main(int argc, char *argv[]){
     mkfifo(bc_pipe_file_name, 0666);
 
     if(pipe(parent_child_addr_fd)==-1){
-        fputs("failed to create address pipe for parent-child communication",stderr);
+        fputs("failed to create address pipe for parent-child communication\n",stderr);
         exit(EXIT_FAILURE);
     }
     if(pipe(parent_child_histogram_before_fd)==-1){
-        fputs("failed to create first histogram pipe for parent-child communication",stderr);
+        fputs("failed to create first histogram pipe for parent-child communication\n",stderr);
         exit(EXIT_FAILURE);
     }
     if(pipe(parent_child_histogram_after_fd)==-1){
-        fputs("failed to create second histogram pipe for parent-child communication",stderr);
+        fputs("failed to create second histogram pipe for parent-child communication\n",stderr);
         exit(EXIT_FAILURE);
     }
     
@@ -69,57 +69,57 @@ void main(int argc, char *argv[]){
 
 
                 if(read(parent_child_addr_fd[0], input_file_addr, MAX_FILE_ADDR_STR_LEN*sizeof(char))==-1){
-                    fputs("failed to pass input file address to process C",stderr);
+                    fputs("failed to pass input file address to process C\n",stderr);
                     exit(EXIT_FAILURE);
                 }
 
                 if(write(named_pipe_fd_ac, input_file_addr, strlen(input_file_addr)+1)==-1){
-                    fputs("failed to pass before filtering input file address to process A",stderr);
+                    fputs("failed to pass before filtering input file address to process A\n",stderr);
                     exit(EXIT_FAILURE);
                 }
 
                 if(write(named_pipe_fd_bc, input_file_addr, strlen(input_file_addr)+1)==-1){
-                    fputs("failed to pass input file address to process B",stderr);
+                    fputs("failed to pass input file address to process B\n",stderr);
                     exit(EXIT_FAILURE);
                 }
 
                 sleep(2);
 
                 if(read(named_pipe_fd_ac, before_hist_c, sizeof(int)*256)==-1){
-                    fputs("failed to read first histogram from process A",stderr);
+                    fputs("failed to read first histogram from process A\n",stderr);
                     exit(EXIT_FAILURE);
                 }
 
                 if(write(parent_child_histogram_before_fd[1], before_hist_c, sizeof(int)*256)==-1){
-                    fputs("failed to pass first histogram to parent",stderr);
+                    fputs("failed to pass first histogram to parent\n",stderr);
                     exit(EXIT_FAILURE);
                 }
 
 
                 if(read(named_pipe_fd_bc, output_file_addr_c, MAX_FILE_ADDR_STR_LEN*sizeof(char))==-1){
-                    fputs("failed to get output file address from process B",stderr);
+                    fputs("failed to get output file address from process B\n",stderr);
                     exit(EXIT_FAILURE);
                 }
 
                 if(write(named_pipe_fd_ac, output_file_addr_c, strlen(output_file_addr_c)+1)==-1){
-                    fputs("failed to pass after filtering input file address to process A",stderr);
+                    fputs("failed to pass after filtering input file address to process A\n",stderr);
                     exit(EXIT_FAILURE);
                 }
                 
                 sleep(2);
                 
                 if(read(named_pipe_fd_ac, after_hist_c, sizeof(int)*256)==-1){
-                    fputs("failed to read second histogram from process A",stderr);
+                    fputs("failed to read second histogram from process A\n",stderr);
                     exit(EXIT_FAILURE);
                 }
 
                 if(write(parent_child_histogram_after_fd[1], after_hist_c, sizeof(int)*256)==-1){
-                    fputs("failed to pass second histogram from parent",stderr);
+                    fputs("failed to pass second histogram from parent\n",stderr);
                     exit(EXIT_FAILURE);
                 }
                 
                 if(write(parent_child_addr_fd[1], output_file_addr_c, MAX_FILE_ADDR_STR_LEN*sizeof(char))==-1){
-                    fputs("failed to pass output file address to parent",stderr);
+                    fputs("failed to pass output file address to parent\n",stderr);
                     exit(EXIT_FAILURE);
                 }
 
@@ -136,20 +136,20 @@ void main(int argc, char *argv[]){
                 close(parent_child_histogram_before_fd[1]);
 
                 if(write(parent_child_addr_fd[1], file_addr, MAX_FILE_ADDR_STR_LEN*sizeof(char))==-1){
-                    fputs("failed to pass input file address to process C",stderr);
+                    fputs("failed to pass input file address to process C\n",stderr);
                     exit(EXIT_FAILURE);
                 }
                 if(read(parent_child_histogram_before_fd[0], before_hist, sizeof(int)*256)==-1){
-                    fputs("failed to read first histogram from process C",stderr);
+                    fputs("failed to read first histogram from process C\n",stderr);
                     exit(EXIT_FAILURE);
                 }
                 if(read(parent_child_histogram_after_fd[0], after_hist, sizeof(int)*256)){
-                    fputs("failed to read second histogram from process C",stderr);
+                    fputs("failed to read second histogram from process C\n",stderr);
                     exit(EXIT_FAILURE);
                 }
 
                 if(read(parent_child_addr_fd[0], output_file_addr, MAX_FILE_ADDR_STR_LEN*sizeof(char))){
-                    fputs("failed to read output file address from process C",stderr);
+                    fputs("failed to read output file address from process C\n",stderr);
                     exit(EXIT_FAILURE);
                 }
 
