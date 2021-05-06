@@ -14,8 +14,8 @@ const int GRAY_LEVELS=256;
 int get_image(char *filename, int im[][IM_SIZE], int *xsize, int *ysize){
 	FILE *infile;
 	int i, j;
-	if ((infile == fopen(filename, "r")) != NULL){
-		fscanf(infile, "%d %d", &xsize, &ysize);
+	if ((infile = fopen(filename, "r")) != NULL){
+		fscanf(infile, "%d %d", xsize, ysize);
 		for (i = 0; i < *ysize; i++){
 			for (j = 0; j < *xsize; j++){
 				fscanf(infile, "%d", &im[i][j]);
