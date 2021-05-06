@@ -11,13 +11,12 @@ const int IM_SIZE=512;
 const int GRAY_LEVELS=256;
 
 
-int get_image(char *filename, int im[][IM_SIZE], int *xsize, int *ysize){
+int get_image(char *filename, int im[][IM_SIZE]){
 	FILE *infile;
 	int i, j;
 	if ((infile = fopen(filename, "r")) != NULL){
-		fscanf(infile, "%d %d", xsize, ysize);
-		for (i = 0; i < *ysize; i++){
-			for (j = 0; j < *xsize; j++){
+		for (i = 0; i < IM_SIZE; i++){
+			for (j = 0; j < IM_SIZE; j++){
 				fscanf(infile, "%d", &im[i][j]);
 			}
 		}
@@ -27,12 +26,12 @@ int get_image(char *filename, int im[][IM_SIZE], int *xsize, int *ysize){
 }
 
 
-void find_histogram(int image[][IM_SIZE], int xsize, int ysize, int hist[GRAY_LEVELS]){
+void find_histogram(int image[][IM_SIZE], int hist[GRAY_LEVELS]){
 	int i, j;
 	for (i = 0; i < GRAY_LEVELS; hist[i++] = 0);
 
-	for (i = 0; i < ysize; i++)
-		for (j = 0; j < xsize; j++)
+	for (i = 0; i < IM_SIZE; i++)
+		for (j = 0; j < IM_SIZE; j++)
 			hist[image[i][j]]++;
 }
 
@@ -40,7 +39,7 @@ void main(int argc, char* argv[]){
 	char* file_addr;
 	char* fifo_name;
 	int fd;
-	int image[IM_SIZE][IM_SIZE], histogram[GRAY_LEVELS], xsize, ysize;
+	int image[IM_SIZE][IM_SIZE], histogram[GRAY_LEVELS];
 
     if(argc<2){
         fputs("Eror: too few arguments. (histogram_calculator)\n",stderr);
@@ -59,11 +58,11 @@ void main(int argc, char* argv[]){
 	}
 	close(fd);
 
-	if (!(get_image(file_addr, image, &xsize, &ysize))){
+	if (!(get_image(file_addr, image))){
         fputs("Eror opening the image. (histogram_calculator/get_image)\n",stderr);
         exit(EXIT_FAILURE);
 	}else{
-		find_histogram(image, xsize, ysize, histogram);
+		find_histogram(image, histogram);
 	}
 
 	fd=open(fifo_name,O_WRONLY);
