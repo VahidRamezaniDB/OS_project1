@@ -13,6 +13,23 @@ void generate_kernel(int kernel[KERNEL_SIZE][KERNEL_SIZE]){
 
 }
 
+void apply_kernel(int im[IM_SIZE][IM_SIZE],int output_im[IM_SIZE][IM_SIZE],int kernel[KERNEL_SIZE][KERNEL_SIZE]){
+
+
+}
+
+void image_pad(int im[IM_SIZE][IM_SIZE],int out[IM_SIZE+KERNEL_SIZE-1][IM_SIZE+KERNEL_SIZE-1]){
+    for(int i=0;i<IM_SIZE+KERNEL_SIZE-1;i++){
+        for(int j=0;j<IM_SIZE+KERNEL_SIZE-1;j++){
+            if(i<KERNEL_SIZE/2 || j<KERNEL_SIZE/2
+            || i-IM_SIZE>KERNEL_SIZE/2 || j-IM_SIZE>KERNEL_SIZE/2){
+                out[i][j]=0;
+            }else{
+                out[i][j]=im[i-KERNEL_SIZE/2][j-KERNEL_SIZE/2];
+            }
+        }
+    }
+}
 
 void main(int argc, char* argv[]){
     char* file_addr;
