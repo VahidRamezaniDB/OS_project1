@@ -19,10 +19,11 @@ void main(int argc, char* argv[]){
 	char* fifo_name;
 	int fd;
 	int image[IM_SIZE][IM_SIZE];
+    int output_image[IM_SIZE][IM_SIZE];
     int kernel[KERNEL_SIZE][KERNEL_SIZE];
 
     if(argc<2){
-        fputs("Eror: too few arguments. (histogram_calculator)\n",stderr);
+        fputs("Eror: too few arguments. (filtering)\n",stderr);
         exit(EXIT_FAILURE);
     }
 
@@ -32,5 +33,12 @@ void main(int argc, char* argv[]){
 
 	fd=open(fifo_name,O_RDONLY);
 
+    FILE *file_pointer = fopen("outputimg.bmp", "w");
+    if(file_pointer == NULL){
+        fputs("failed to open output file. (filtering process)", stderr);
+        exit(EXIT_FAILURE);
+    }
+    fputs(output_image, file_pointer);
+    fclose(file_pointer);
 
 }
