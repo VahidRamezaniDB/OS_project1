@@ -55,7 +55,7 @@ void main(int argc, char* argv[]){
         fputs("failed to open output file. (filtering process)", stderr);
         exit(EXIT_FAILURE);
     }
-    fputs(output_image, file_pointer);
+    fwrite(output_image, sizeof(int), IM_SIZE*IM_SIZE, file_pointer);
     fclose(file_pointer);
 
 }
