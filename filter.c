@@ -30,8 +30,23 @@ void generate_kernel(int kernel[KERNEL_SIZE][KERNEL_SIZE]){
             kernel[i][j] /= sum;
 }
 
+int compute_gauss_avg(int im[IM_SIZE+KERNEL_SIZE-1][IM_SIZE+KERNEL_SIZE-1],kernel[KERNEL_SIZE][KERNEL_SIZE],int i, int j){
+    double res=0.0;
+    for(int k=0;k<KERNEL_SIZE;k++){
+        for(int h=0;h<KERNEL_SIZE;h++){
+            res+=(im[i+k][j+h]*kernel[k][h])/(double)(KERNEL_SIZE*KERNEL_SIZE)
+        }
+    }
+    return (int)res;
+}
+
 void apply_kernel(int im[IM_SIZE+KERNEL_SIZE-1][IM_SIZE+KERNEL_SIZE-1],int output_im[IM_SIZE][IM_SIZE],int kernel[KERNEL_SIZE][KERNEL_SIZE]){
 
+    for (int i=0;i<IM_SIZE;i++){
+        for (int j=0;j<IM_SIZE;j++){
+            output_im[i][j]=compute_gauss_avg(im,i,j);
+        }
+    }
 
 }
 
