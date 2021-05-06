@@ -45,7 +45,7 @@ void main(int argc, char *argv[]){
 
     }else{
 
-    }
+    
         if(!(pid_b=fork())){//process B
 
             char *arguments[] = {"./filter", "bcnamedpipe", NULL};
@@ -53,7 +53,7 @@ void main(int argc, char *argv[]){
 
         }else{
 
-        }
+        
             if(!(pid_c=fork())){//process C
                 
                 named_pipe_fd_bc = open(bc_pipe_file_name, O_RDWR);
@@ -159,4 +159,6 @@ void main(int argc, char *argv[]){
                 close(parent_child_histogram_before_fd[0]);
 
             }
+        }
+    }
 }

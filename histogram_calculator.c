@@ -61,9 +61,10 @@ void main(int argc, char* argv[]){
 	if (!(get_image(file_addr, image))){
         fputs("Eror opening the image. (histogram_calculator/get_image)\n",stderr);
         exit(EXIT_FAILURE);
-	}else{
-		find_histogram(image, histogram);
 	}
+
+	find_histogram(image, histogram);
+	
 
 	fd=open(fifo_name,O_WRONLY);
 
