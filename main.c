@@ -45,7 +45,6 @@ void main(int argc, char *argv[]){
 
     }else{
 
-    }
         if(!(pid_b=fork())){//process B
 
             char *arguments[] = {"./filter", "bcnamedpipe", NULL};
@@ -53,7 +52,7 @@ void main(int argc, char *argv[]){
 
         }else{
 
-        }
+        
             if(!(pid_c=fork())){//process C
                 
                 named_pipe_fd_bc = open(bc_pipe_file_name, O_RDWR);
@@ -143,15 +142,15 @@ void main(int argc, char *argv[]){
                     fputs("failed to read first histogram from process C\n",stderr);
                     exit(EXIT_FAILURE);
                 }
-                if(read(parent_child_histogram_after_fd[0], after_hist, sizeof(int)*256)){
+                if(read(parent_child_histogram_after_fd[0], after_hist, sizeof(int)*256)==-1){
                     fputs("failed to read second histogram from process C\n",stderr);
                     exit(EXIT_FAILURE);
                 }
-
-                if(read(parent_child_addr_fd[0], output_file_addr, MAX_FILE_ADDR_STR_LEN*sizeof(char))){
+                if(read(parent_child_addr_fd[0], output_file_addr, MAX_FILE_ADDR_STR_LEN*sizeof(char))==-1){
                     fputs("failed to read output file address from process C\n",stderr);
                     exit(EXIT_FAILURE);
                 }
+                printf("output file was saved in: %s\n", output_file_addr);
 
                 close(parent_child_addr_fd[0]);
                 close(parent_child_addr_fd[1]);
@@ -159,4 +158,6 @@ void main(int argc, char *argv[]){
                 close(parent_child_histogram_before_fd[0]);
 
             }
+        }
+    }
 }
