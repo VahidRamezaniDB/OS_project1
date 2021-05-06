@@ -98,12 +98,12 @@ void main(int argc, char* argv[]){
     apply_kernel(image_padded,output_image,kernel);
 
 
-    // FILE *file_pointer = fopen("outputimg.bmp", "w");
-    // if(file_pointer == NULL){
-    //     fputs("failed to open output file. (filtering process)\n", stderr);
-    //     exit(EXIT_FAILURE);
-    // }
-    // fputs(output_image, file_pointer);
-    // fclose(file_pointer);
+    FILE *file_pointer = fopen("outputimg.bmp", "w");
+    if(file_pointer == NULL){
+        fputs("failed to open output file. (filtering process)\n", stderr);
+        exit(EXIT_FAILURE);
+    }    
+    fwrite(output_image, sizeof(int), IM_SIZE*IM_SIZE, file_pointer);
+    fclose(file_pointer);
 
 }
