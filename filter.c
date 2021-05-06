@@ -13,6 +13,14 @@ void generate_kernel(int kernel[KERNEL_SIZE][KERNEL_SIZE]){
 
 }
 
+void apply_kernel(int im[IM_SIZE][IM_SIZE],int output_im[IM_SIZE][IM_SIZE],int kernel[KERNEL_SIZE][KERNEL_SIZE]){
+
+
+}
+
+void image_pad(int im[IM_SIZE][IM_SIZE],int out[IM_SIZE+KERNEL_SIZE-1][IM_SIZE+KERNEL_SIZE-1]){
+    
+}
 
 void main(int argc, char* argv[]){
     char* file_addr;
@@ -22,7 +30,7 @@ void main(int argc, char* argv[]){
     int kernel[KERNEL_SIZE][KERNEL_SIZE];
 
     if(argc<2){
-        fputs("Eror: too few arguments. (histogram_calculator)\n",stderr);
+        fputs("Eror: too few arguments. (filter)\n",stderr);
         exit(EXIT_FAILURE);
     }
 
