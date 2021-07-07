@@ -10,7 +10,7 @@ const int MAX_FILE_ADDR_STR_LEN=80;
 
 
 void main(int argc, char *argv[]){
-    char *file_addr=malloc(MAX_FILE_ADDR_STR_LEN*sizeof(char));
+    char *file_addr="Elaine.bmp";
     char *output_file_addr=malloc(MAX_FILE_ADDR_STR_LEN*sizeof(char));
     int *before_hist = malloc(sizeof(int)*256);
     int *after_hist = malloc(sizeof(int)*256);
